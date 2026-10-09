@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import logo from '../../assets/ramesh.png';
+import instaIcon from '../../assets/insta-svg (1).svg';
 import Container from '../common/Container';
 
 export default function Footer() {
   return (
     <footer className="bg-brand-primary pt-20 pb-10 border-t-4 border-brand-accent">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
           
           {/* Brand & Description */}
           <div className="lg:col-span-1">
@@ -27,34 +28,12 @@ export default function Footer() {
               Crafting timeless elegance and preserving the heritage of fine jewellery for generations. 
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-300 font-bold text-xs">
-                <img src="https://www.pinterest.com/ideas/insta-logo/929012575567/" alt="insta" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-300 font-bold text-xs">
-                FB
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-300 font-bold text-xs">
-                X
+              <a href="https://www.instagram.com/rameshjewellers2004?stkn=MThpbmxmdDBlZWxqZg==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-300 font-bold text-xs">
+                <img src={instaIcon} alt="Instagram" className="w-5 h-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-serif text-xl text-white mb-6 tracking-wide">Quick Links</h4>
-            <ul className="space-y-3">
-              {['Home', 'About', 'Collections', 'Gallery', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link 
-                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                    className="text-brand-light hover:text-brand-accent text-sm tracking-wider uppercase transition-colors"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
 
           {/* Contact Info */}
           <div>
@@ -63,18 +42,18 @@ export default function Footer() {
               <li className="flex items-start space-x-3 text-brand-light">
                 <MapPin className="text-brand-accent shrink-0 mt-1" size={18} />
                 <span className="text-sm font-light leading-relaxed">
-                  123 Jewellery Lane, <br />
-                  Diamond District, <br />
-                  New Delhi - 110001
+                  Shop No.6, Siddiq Manzil, Nr.Ramesh Hotel, <br />
+                  Kurar Village, Malad East, <br />
+                  Mumbai-400097
                 </span>
               </li>
               <li className="flex items-center space-x-3 text-brand-light">
                 <Phone className="text-brand-accent shrink-0" size={18} />
-                <span className="text-sm font-light">+91 98765 43210</span>
+                <span className="text-sm font-light">+91 9619603331</span>
               </li>
               <li className="flex items-center space-x-3 text-brand-light">
                 <Mail className="text-brand-accent shrink-0" size={18} />
-                <span className="text-sm font-light">info@rameshjewellers.com</span>
+                <span className="text-sm font-light">rameshjewellersks@gmail.com</span>
               </li>
             </ul>
           </div>

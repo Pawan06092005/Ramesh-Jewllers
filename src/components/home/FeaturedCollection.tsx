@@ -45,11 +45,11 @@ export default function FeaturedCollection() {
               <span className="text-brand-accent italic font-light">Elegance</span>
             </h2>
             <div className="w-16 h-1 bg-brand-accent mb-8" />
-            
+
             <p className="text-brand-light/90 leading-relaxed mb-8 font-light text-lg">
               Inspired by the grandeur of ancient royalty, this exclusive collection brings together the finest diamonds and purest gold. Every curve and cut is meticulously crafted by our master artisans to create a legacy you can wear.
             </p>
-            
+
             <Button to="/collections/royal-heritage" variant="gold">
               Discover The Collection
             </Button>

@@ -6,7 +6,7 @@ export default function Button({
   variant = 'primary', 
   to, 
   href, 
-  className = '', 
+  className = '',  
   ...props 
 }: { children: React.ReactNode, variant?: string, to?: string, href?: string, className?: string, [key: string]: any }) {
   const baseStyles = "inline-flex items-center justify-center px-8 py-3 text-sm tracking-widest uppercase transition-all duration-300 font-medium";

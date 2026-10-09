@@ -7,11 +7,10 @@ export default function GalleryCard({ image, index, onClick }) {
   const isLarge = image.size === 'large';
 
   return (
-    <div 
+    <div
       ref={revealRef}
-      className={`reveal relative group cursor-pointer overflow-hidden rounded-sm bg-brand-primary ${
-        isLarge ? 'md:col-span-2 md:row-span-2 h-[400px] md:h-full' : 'h-[300px]'
-      }`}
+      className={`reveal relative group cursor-pointer overflow-hidden rounded-sm bg-brand-primary ${isLarge ? 'md:col-span-2 md:row-span-2 h-[400px] md:h-full' : 'h-[300px]'
+        }`}
       style={{ animationDelay: `${index * 150}ms` }}
       onClick={() => onClick(image.url)}
     >

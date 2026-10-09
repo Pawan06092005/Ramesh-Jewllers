@@ -14,7 +14,7 @@ export default function Gallery() {
     <section className="py-24 bg-brand-light">
       <Container>
         <div ref={revealRef} className="reveal">
-          <SectionHeading 
+          <SectionHeading
             title="Curated Gallery"
             subtitle="Moments of Brilliance"
             centered={true}
@@ -23,11 +23,11 @@ export default function Gallery() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 h-auto md:h-[800px]">
           {galleryData.map((item, index) => (
-            <GalleryCard 
-              key={item.id} 
-              image={item} 
-              index={index} 
-              onClick={setSelectedImage} 
+            <GalleryCard
+              key={item.id}
+              image={item}
+              index={index}
+              onClick={setSelectedImage}
             />
           ))}
         </div>
@@ -35,9 +35,9 @@ export default function Gallery() {
 
       {/* Lightbox Modal */}
       {selectedImage && (
-        <Lightbox 
-          image={selectedImage} 
-          onClose={() => setSelectedImage(null)} 
+        <Lightbox
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
         />
       )}
     </section>
