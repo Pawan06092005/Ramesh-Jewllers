@@ -1,102 +1,169 @@
-import React from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { MapPin, Phone, Mail, Clock, ChevronDown } from 'lucide-react';
 import Container from '../common/Container';
-import SectionHeading from '../common/SectionHeading';
+import Reveal from '../common/Reveal';
 import Button from '../common/Button';
+import { business, mapEmbedUrl, mapUrl } from '../../data/business';
+import { collectionsData } from '../../data/collections';
+
+const GENERAL = 'General enquiry';
+const topics = [GENERAL, ...collectionsData.map((c) => c.title), 'The Royal Heritage collection'];
 
 export default function Contact() {
-  const leftReveal = useScrollReveal();
-  const rightReveal = useScrollReveal();
+  const [searchParams] = useSearchParams();
+  const enquiry = searchParams.get('enquiry');
+  const initialTopic = enquiry && topics.includes(enquiry) ? enquiry : GENERAL;
 
-  const contactInfo = [
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    topic: initialTopic,
+    message: initialTopic === GENERAL ? '' : `I'd like to know more about your ${initialTopic}.`,
+  });
+  const [sent, setSent] = useState(false);
+
+  const update = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  // There is no form backend, so the message is composed in the visitor's email app.
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`${form.topic} — ${form.firstName} ${form.lastName}`.trim());
+    const body = encodeURIComponent(
+      `${form.message}\n\n— ${form.firstName} ${form.lastName}\n${form.email}`
+    );
+    window.location.href = `mailto:${business.email}?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  const details = [
     {
-      icon: <MapPin className="text-brand-accent w-6 h-6" />,
+      icon: MapPin,
       title: 'Our Store',
-      details: ['123 Jewellery Lane,', 'Diamond District,', 'New Delhi - 110001']
+      content: (
+        <>
+          <address className="not-italic">
+            {business.addressLines.map((line) => (
+              <span key={line} className="block">{line}</span>
+            ))}
+          </address>
+          <a href={mapUrl} target="_blank" rel="noopener noreferrer" className="link-underline mt-3 inline-block text-xs uppercase tracking-[0.2em] text-gold-deep">
+            Get directions
+          </a>
+        </>
+      ),
     },
     {
-      icon: <Phone className="text-brand-accent w-6 h-6" />,
+      icon: Phone,
       title: 'Phone',
-      details: ['+91 98765 43210', '+91 11 2345 6789']
+      content: <a href={business.phoneHref} className="link-underline hover:text-charcoal">{business.phone}</a>,
     },
     {
-      icon: <Mail className="text-brand-accent w-6 h-6" />,
+      icon: Mail,
       title: 'Email',
-      details: ['info@rameshjewellers.com', 'support@rameshjewellers.com']
+      content: <a href={`mailto:${business.email}`} className="link-underline break-all hover:text-charcoal">{business.email}</a>,
     },
     {
-      icon: <Clock className="text-brand-accent w-6 h-6" />,
+      icon: Clock,
       title: 'Business Hours',
-      details: ['Monday - Saturday:', '11:00 AM - 8:00 PM', 'Sunday: Closed']
-    }
+      content: business.hours.map((h) => (
+        <span key={h.days} className="block">
+          {h.days}: {h.time}
+        </span>
+      )),
+    },
   ];
 
   return (
-    <section className="py-24 bg-brand-light">
-      <Container>
-        <div ref={useScrollReveal()} className="reveal">
-          <SectionHeading 
-            title="Get In Touch"
-            subtitle="Visit Our Store"
-            centered={true}
-          />
-        </div>
+    <>
+      <section className="bg-ivory py-20 sm:py-28 lg:py-32">
+        <Container>
+          <div className="grid grid-cols-12 gap-y-16 lg:gap-x-8">
+            {/* Details */}
+            <Reveal className="col-span-12 lg:col-span-5">
+              <h2 className="text-[2.5rem] leading-[1.05] sm:text-5xl">
+                We'd love to <span className="italic text-gold-deep">hear from you</span>
+              </h2>
+              <p className="mt-6 max-w-md text-base leading-relaxed text-stone">
+                Whether you're looking for the perfect engagement ring or a custom-designed masterpiece, our expert
+                jewellers are here to assist you.
+              </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-12">
-          {/* Contact Information */}
-          <div ref={leftReveal} className="reveal">
-            <h3 className="text-3xl font-serif text-brand-dark mb-8">We'd love to hear from you</h3>
-            <p className="text-brand-muted font-light leading-relaxed mb-10">
-              Whether you're looking for the perfect engagement ring or a custom-designed masterpiece, our expert jewellers are here to assist you.
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {contactInfo.map((info, index) => (
-                <div key={index} className="flex flex-col">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-brand-primary/10 rounded-full flex items-center justify-center">
-                      {info.icon}
-                    </div>
-                    <h4 className="font-serif text-xl text-brand-dark">{info.title}</h4>
+              <dl className="mt-12 border-t border-charcoal/10">
+                {details.map((d) => (
+                  <div key={d.title} className="grid grid-cols-[2rem_1fr] gap-x-4 border-b border-charcoal/10 py-6 sm:grid-cols-[2rem_9rem_1fr]">
+                    <d.icon size={18} strokeWidth={1.25} className="mt-0.5 text-gold-deep" aria-hidden="true" />
+                    <dt className="eyebrow mt-1 text-charcoal">{d.title}</dt>
+                    <dd className="col-start-2 mt-2 text-base leading-relaxed text-stone sm:col-start-3 sm:mt-0">{d.content}</dd>
                   </div>
-                  {info.details.map((detail, idx) => (
-                    <p key={idx} className="text-brand-muted font-light">{detail}</p>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+                ))}
+              </dl>
+            </Reveal>
 
-          {/* Contact Form */}
-          <div ref={rightReveal} className="reveal bg-white p-8 rounded-sm shadow-sm border border-brand-accent/20">
-            <h3 className="text-2xl font-serif text-brand-dark mb-6">Send a Message</h3>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-brand-dark text-sm font-medium mb-2">First Name</label>
-                  <input type="text" className="w-full bg-brand-light border border-brand-accent/30 px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors rounded-sm" />
-                </div>
-                <div>
-                  <label className="block text-brand-dark text-sm font-medium mb-2">Last Name</label>
-                  <input type="text" className="w-full bg-brand-light border border-brand-accent/30 px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors rounded-sm" />
-                </div>
+            {/* Form */}
+            <Reveal delay={0.15} className="col-span-12 lg:col-span-6 lg:col-start-7">
+              <div className="bg-white px-6 py-10 sm:px-12 sm:py-14">
+                <p className="eyebrow mb-3 text-gold-deep">Send a Message</p>
+                <h3 className="font-serif text-3xl leading-tight sm:text-4xl">How may we help?</h3>
+
+                <form onSubmit={handleSubmit} className="mt-10 space-y-8">
+                  <div className="grid gap-8 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="firstName" className="eyebrow block text-stone">First Name</label>
+                      <input id="firstName" type="text" autoComplete="given-name" required value={form.firstName} onChange={update('firstName')} className="field" />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName" className="eyebrow block text-stone">Last Name</label>
+                      <input id="lastName" type="text" autoComplete="family-name" value={form.lastName} onChange={update('lastName')} className="field" />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="eyebrow block text-stone">Email Address</label>
+                    <input id="email" type="email" autoComplete="email" required value={form.email} onChange={update('email')} className="field" />
+                  </div>
+                  <div>
+                    <label htmlFor="topic" className="eyebrow block text-stone">Enquiry About</label>
+                    <div className="relative">
+                      <select id="topic" value={form.topic} onChange={update('topic')} className="field cursor-pointer appearance-none pr-8">
+                        {topics.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown size={16} strokeWidth={1.25} className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-stone" aria-hidden="true" />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="eyebrow block text-stone">Message</label>
+                    <textarea id="message" rows={4} required value={form.message} onChange={update('message')} className="field resize-none" />
+                  </div>
+                  <Button type="submit" arrow className="w-full">
+                    Send Message
+                  </Button>
+                  <p role="status" className="min-h-[1.25rem] text-sm text-stone">
+                    {sent && 'Thank you — your email app should now open with your message ready to send.'}
+                  </p>
+                </form>
               </div>
-              <div>
-                <label className="block text-brand-dark text-sm font-medium mb-2">Email Address</label>
-                <input type="email" className="w-full bg-brand-light border border-brand-accent/30 px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors rounded-sm" />
-              </div>
-              <div>
-                <label className="block text-brand-dark text-sm font-medium mb-2">Message</label>
-                <textarea rows={4} className="w-full bg-brand-light border border-brand-accent/30 px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors rounded-sm resize-none"></textarea>
-              </div>
-              <Button type="submit" className="w-full">
-                Send Message
-              </Button>
-            </form>
+            </Reveal>
           </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+
+      <section aria-label="Map" className="bg-ivory pb-24 sm:pb-32">
+        <Container>
+          <div className="relative aspect-[4/3] overflow-hidden bg-beige sm:aspect-[21/9]">
+            <iframe
+              title={`Map showing ${business.name}, Malad East, Mumbai`}
+              src={mapEmbedUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full border-0 grayscale-[0.85] sepia-[0.15]"
+            />
+          </div>
+        </Container>
+      </section>
+    </>
   );
 }

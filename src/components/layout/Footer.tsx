@@ -1,93 +1,101 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail } from 'lucide-react';
-import logo from '../../assets/ramesh.png';
+import { ArrowUp } from 'lucide-react';
 import instaIcon from '../../assets/insta-svg (1).svg';
+import symbol from '../../assets/ramesh-symbol.webp';
 import Container from '../common/Container';
+import Logo from '../common/Logo';
+import { business, mapUrl, navLinks } from '../../data/business';
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-primary pt-20 pb-10 border-t-4 border-brand-accent">
+    <footer className="surface-dark bg-charcoal text-ivory">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
-          
-          {/* Brand & Description */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-4 mb-6 group">
-              <img src={logo} alt="Ramesh Jewellers Logo" className="h-16 w-auto object-contain" />
-              <div className="flex flex-col items-start">
-                {/* <span className="font-serif text-2xl font-bold text-white tracking-widest leading-none group-hover:text-brand-accent transition-colors">
-                  RAMESH
-                </span>
-                <span className="font-serif text-xs tracking-[0.3em] text-brand-accent leading-none mt-1">
-                  JEWELLERS
-                </span> */}
-              </div>
+        {/* Directory */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 pb-16 pt-20 md:grid-cols-12 lg:pt-24">
+          <div className="col-span-2 md:col-span-12 lg:col-span-4">
+            <Link to="/" aria-label="Ramesh Jewellers — Home" className="group inline-flex items-center gap-4 sm:gap-5">
+              <img
+                src={symbol}
+                alt=""
+                width={440}
+                height={335}
+                className="h-20 w-auto shrink-0 transition-transform duration-700 ease-luxe group-hover:scale-105 sm:h-24"
+              />
+              <span className="h-14 w-px bg-gold/30" aria-hidden="true" />
+              <Logo surface="dark" className="h-12 sm:h-14" />
             </Link>
-            <p className="text-brand-light font-light leading-relaxed mb-6 text-sm opacity-90">
-              Crafting timeless elegance and preserving the heritage of fine jewellery for generations. 
+            <p className="mt-7 max-w-xs text-sm leading-relaxed text-ivory/60">
+              Crafting timeless elegance and preserving the heritage of fine jewellery for generations.
             </p>
-            <div className="flex space-x-4">
-              <a href="https://www.instagram.com/rameshjewellers2004?stkn=MThpbmxmdDBlZWxqZg==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-300 font-bold text-xs">
-                <img src={instaIcon} alt="Instagram" className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-serif text-xl text-white mb-6 tracking-wide">Contact Us</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start space-x-3 text-brand-light">
-                <MapPin className="text-brand-accent shrink-0 mt-1" size={18} />
-                <span className="text-sm font-light leading-relaxed">
-                  Shop No.6, Siddiq Manzil, Nr.Ramesh Hotel, <br />
-                  Kurar Village, Malad East, <br />
-                  Mumbai-400097
-                </span>
-              </li>
-              <li className="flex items-center space-x-3 text-brand-light">
-                <Phone className="text-brand-accent shrink-0" size={18} />
-                <span className="text-sm font-light">+91 9619603331</span>
-              </li>
-              <li className="flex items-center space-x-3 text-brand-light">
-                <Mail className="text-brand-accent shrink-0" size={18} />
-                <span className="text-sm font-light">rameshjewellersks@gmail.com</span>
-              </li>
+          <div className="md:col-span-4 lg:col-span-2 lg:col-start-6">
+            <p className="eyebrow mb-5 text-gold">Explore</p>
+            <ul className="space-y-1 text-sm">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.href} className="link-underline inline-block py-1.5 text-ivory/75 transition-colors hover:text-ivory">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h4 className="font-serif text-xl text-white mb-6 tracking-wide">Newsletter</h4>
-            <p className="text-brand-light font-light text-sm mb-4 opacity-90">
-              Subscribe to receive updates on our latest collections and exclusive offers.
-            </p>
-            <form className="flex flex-col space-y-3">
-              <input 
-                type="email" 
-                placeholder="Your Email Address" 
-                className="bg-brand-secondary border border-brand-accent/30 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-accent rounded-sm transition-colors"
-              />
-              <button 
-                type="submit"
-                className="bg-brand-accent text-brand-dark font-medium px-4 py-3 uppercase tracking-widest text-sm hover:bg-brand-accentDark hover:text-white transition-all duration-300 rounded-sm"
-              >
-                Subscribe
-              </button>
-            </form>
+          <div className="md:col-span-4 lg:col-span-2">
+            <p className="eyebrow mb-5 text-gold">Visit</p>
+            <address className="text-sm not-italic leading-relaxed text-ivory/75">
+              {business.addressLines.map((line) => (
+                <span key={line} className="block">{line}</span>
+              ))}
+            </address>
+            <a
+              href={mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline mt-4 inline-block py-1 text-xs uppercase tracking-[0.2em] text-gold"
+            >
+              Get directions
+            </a>
+          </div>
+
+          <div className="col-span-2 md:col-span-4 lg:col-span-3">
+            <p className="eyebrow mb-5 text-gold">Contact</p>
+            <ul className="space-y-1 text-sm text-ivory/75">
+              <li>
+                <a href={business.phoneHref} className="link-underline inline-block py-1.5 hover:text-ivory">{business.phone}</a>
+              </li>
+              <li>
+                <a href={`mailto:${business.email}`} className="link-underline inline-block break-all py-1.5 hover:text-ivory">
+                  {business.email}
+                </a>
+              </li>
+            </ul>
+            <a
+              href={business.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-5 inline-flex items-center gap-3 py-1 text-sm text-ivory/75 transition-colors hover:text-ivory"
+            >
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 transition-colors group-hover:border-gold">
+                <img src={instaIcon} alt="" className="h-4 w-4" />
+              </span>
+              {business.instagram.handle}
+            </a>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-brand-accent/20 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-brand-light font-light text-sm opacity-80">
-            &copy; {new Date().getFullYear()} Ramesh Jewellers. All rights reserved.
-          </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-brand-light font-light text-sm opacity-80 hover:text-brand-accent transition-colors">Privacy Policy</a>
-            <a href="#" className="text-brand-light font-light text-sm opacity-80 hover:text-brand-accent transition-colors">Terms of Service</a>
-          </div>
+        <div className="flex flex-col-reverse items-start justify-between gap-6 border-t border-ivory/10 py-8 text-xs text-ivory/50 sm:flex-row sm:items-center">
+          <p>&copy; {new Date().getFullYear()} {business.name}. All rights reserved.</p>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0 })}
+            className="group inline-flex min-h-[44px] items-center gap-3 uppercase tracking-[0.2em] text-ivory/60 transition-colors hover:text-gold"
+          >
+            Back to top
+            <ArrowUp size={14} strokeWidth={1.25} className="transition-transform duration-500 ease-luxe group-hover:-translate-y-1" />
+          </button>
         </div>
       </Container>
     </footer>

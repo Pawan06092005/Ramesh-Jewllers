@@ -6,17 +6,19 @@ import FeaturedCollection from '../components/home/FeaturedCollection';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import Gallery from '../components/home/Gallery';
 import Testimonials from '../components/home/Testimonials';
+import VisitStore from '../components/home/VisitStore';
 
 export default function Home() {
   return (
-    <div className="pt-20"> {/* Offset for sticky navbar */}
+    <>
       <Hero />
       <About />
       <Collections />
       <FeaturedCollection />
-      <WhyChooseUs />
-      <Gallery />
-      <Testimonials />
-    </div>
+      <WhyChooseUs index="04" />
+      <Gallery index="05" />
+      <Testimonials index="06" />
+      <VisitStore />
+    </>
   );
 }

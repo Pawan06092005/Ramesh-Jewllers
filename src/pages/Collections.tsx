@@ -1,16 +1,29 @@
 import React from 'react';
-import CollectionsSection from '../components/home/Collections';
+import Lookbook from '../components/collections/Lookbook';
 import FeaturedCollection from '../components/home/FeaturedCollection';
+import VisitStore from '../components/home/VisitStore';
+import PageHeader from '../components/common/PageHeader';
 
 export default function Collections() {
   return (
-    <div className="pt-20">
-      <div className="bg-brand-primary py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Our Collections</h1>
-        <div className="w-16 h-1 bg-brand-accent mx-auto" />
-      </div>
-      <CollectionsSection />
+    <>
+      <PageHeader
+        eyebrow="Discover the Extraordinary"
+        title={
+          <>
+            Our <span className="italic text-gold-deep">collections</span>
+          </>
+        }
+        intro={
+          <p>
+            From pure 22k gold and brilliant-cut diamonds to complete bridal sets and bespoke, handcrafted designs —
+            each collection is made to be treasured.
+          </p>
+        }
+      />
+      <Lookbook />
       <FeaturedCollection />
-    </div>
+      <VisitStore />
+    </>
   );
 }

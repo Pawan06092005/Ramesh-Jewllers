@@ -1,14 +1,20 @@
 import React from 'react';
 import ContactSection from '../components/contact/Contact';
+import PageHeader from '../components/common/PageHeader';
 
 export default function Contact() {
   return (
-    <div className="pt-20">
-      <div className="bg-brand-primary py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Contact Us</h1>
-        <div className="w-16 h-1 bg-brand-accent mx-auto" />
-      </div>
+    <>
+      <PageHeader
+        eyebrow="Visit Our Store"
+        title={
+          <>
+            Contact <span className="italic text-gold-deep">us</span>
+          </>
+        }
+        intro={<p>Visit us in Kurar Village, Malad East, call the store, or send us a message below.</p>}
+      />
       <ContactSection />
-    </div>
+    </>
   );
 }

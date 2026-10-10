@@ -1,26 +1,28 @@
 import React from 'react';
-import { Star, Quote } from 'lucide-react';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { motion } from 'framer-motion';
 
-export default function TestimonialCard({ name, text, rating, index }) {
-  const revealRef = useScrollReveal({ threshold: 0.1 });
+type TestimonialCardProps = {
+  name: string;
+  text: string;
+};
 
+export default function TestimonialCard({ name, text }: TestimonialCardProps) {
   return (
-    <div 
-      ref={revealRef}
-      className="reveal bg-brand-light p-8 rounded-sm shadow-sm hover:shadow-md transition-all duration-300 relative border border-brand-accent/20"
-      style={{ animationDelay: `${index * 150}ms` }}
+    <motion.figure
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Quote className="absolute top-6 right-6 text-brand-primary/10 w-16 h-16 transform -scale-x-100" />
-      <div className="flex mb-6 relative z-10">
-        {[...Array(rating)].map((_, i) => (
-          <Star key={i} className="w-5 h-5 text-brand-accent fill-brand-accent" />
-        ))}
-      </div>
-      <p className="text-brand-muted italic leading-relaxed mb-6 font-light relative z-10">
-        "{text}"
-      </p>
-      <h4 className="font-serif text-brand-primary text-lg font-bold relative z-10">— {name}</h4>
-    </div>
+      <blockquote className="font-serif text-[1.75rem] leading-[1.3] text-charcoal sm:text-4xl lg:text-[2.75rem] lg:leading-[1.25]">
+        <span className="text-gold-deep">&ldquo;</span>
+        {text}
+        <span className="text-gold-deep">&rdquo;</span>
+      </blockquote>
+      <figcaption className="mt-10 flex items-center gap-4">
+        <span className="h-px w-10 bg-gold" aria-hidden="true" />
+        <span className="eyebrow text-charcoal">{name}</span>
+      </figcaption>
+    </motion.figure>
   );
 }

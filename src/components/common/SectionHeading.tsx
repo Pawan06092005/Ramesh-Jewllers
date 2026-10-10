@@ -1,22 +1,40 @@
 import React from 'react';
+import Reveal from './Reveal';
 
-export default function SectionHeading({ 
-  title, 
-  subtitle, 
-  centered = true,
-  dark = false 
-}) {
+type SectionHeadingProps = {
+  title: React.ReactNode;
+  subtitle?: string;
+  index?: string;
+  centered?: boolean;
+  dark?: boolean;
+  className?: string;
+};
+
+/**
+ * Editorial section heading: a numbered eyebrow with a hairline rule, then a large serif title.
+ */
+export default function SectionHeading({
+  title,
+  subtitle,
+  index,
+  centered = false,
+  dark = false,
+  className = '',
+}: SectionHeadingProps) {
   return (
-    <div className={`mb-12 md:mb-16 ${centered ? 'text-center' : 'text-left'}`}>
+    <Reveal className={`${centered ? 'text-center' : 'text-left'} ${className}`}>
       {subtitle && (
-        <span className="block text-brand-accent font-sans tracking-[0.2em] uppercase mb-4 text-xs md:text-sm">
-          {subtitle}
-        </span>
+        <div className={`mb-6 flex items-center gap-4 ${centered ? 'justify-center' : ''}`}>
+          {index && <span className={`font-serif text-lg italic ${dark ? 'text-gold' : 'text-gold-deep'}`}>{index}</span>}
+          <span className={`h-px w-10 ${dark ? 'bg-gold/60' : 'bg-gold'}`} aria-hidden="true" />
+          <span className={`eyebrow ${dark ? 'text-gold' : 'text-gold-deep'}`}>{subtitle}</span>
+        </div>
       )}
-      <h2 className={`text-3xl md:text-4xl lg:text-5xl font-serif ${dark ? 'text-white' : 'text-brand-dark'}`}>
+      <h2
+        className={`text-[2.5rem] leading-[1.05] sm:text-5xl lg:text-[4rem] ${dark ? 'text-ivory' : 'text-charcoal'}`}
+      >
         {title}
       </h2>
-      <div className={`w-16 h-1 mt-6 bg-brand-accent ${centered ? 'mx-auto' : ''}`} />
-    </div>
+    </Reveal>
   );
 }

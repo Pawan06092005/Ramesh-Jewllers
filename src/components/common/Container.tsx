@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function Container({ children, className = '' }) {
+export default function Container({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+    <div className={`mx-auto w-full max-w-[1360px] px-5 sm:px-8 lg:px-12 ${className}`}>
       {children}
     </div>
   );
