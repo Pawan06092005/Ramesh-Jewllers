@@ -1,14 +1,16 @@
 import React from 'react';
+import PageHeader from '../components/common/PageHeader';
 import CollectionsSection from '../components/home/Collections';
 import FeaturedCollection from '../components/home/FeaturedCollection';
 
 export default function Collections() {
   return (
     <div className="pt-20">
-      <div className="bg-brand-primary py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Our Collections</h1>
-        <div className="w-16 h-1 bg-brand-accent mx-auto" />
-      </div>
+      <PageHeader
+        title="Our Collections"
+        subtitle="Timeless Craftsmanship"
+        image="https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=1600&auto=format&fit=crop"
+      />
       <CollectionsSection />
       <FeaturedCollection />
     </div>

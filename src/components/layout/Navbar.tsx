@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
-import logo from '../../assets/ramesh.png';
+import logo from '../../assets/ramesh-logo.svg';
 import navBg from '../../assets/nav_bg.jpeg';
 import Container from '../common/Container';
 
@@ -44,7 +44,7 @@ export default function Navbar() {
             <img 
               src={logo} 
               alt="Ramesh Jewellers Logo" 
-              className={`transition-all duration-300 object-contain ${scrolled ? 'h-12' : 'h-16'}`} 
+              className={`transition-all duration-300 object-contain ${scrolled ? 'h-10' : 'h-12 md:h-14'}`} 
             />
             {/* Keeping the text optional or hidden on smaller screens since the image logo handles it mostly. The user said to use the logo and don't make it small. Let's keep just the image as the brand if it has the text, but the image is just the logo. Let's add the text next to it for SEO/fallback. */}
             <div className="flex flex-col items-start hidden lg:flex">

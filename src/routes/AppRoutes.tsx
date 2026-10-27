@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Collections from '../pages/Collections';
+import CollectionDetail from '../pages/CollectionDetail';
 import Gallery from '../pages/Gallery';
 import Contact from '../pages/Contact';
 
@@ -25,6 +26,7 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/collections" element={<Collections />} />
+        <Route path="/collections/:slug" element={<CollectionDetail />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
